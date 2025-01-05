@@ -1,0 +1,47 @@
+# Maven files
+target/
+.mvn/
+**/target/
+
+# IDE-specific files
+.idea/
+*.iml
+*.iws
+*.ipr
+.settings/
+.classpath
+.project
+
+# Build output
+build/
+out/
+
+# Generated files
+*.log
+*.tmp
+*.bak
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.rar
+*.7z
+*.gz
+*.tar
+*.tar.gz
+*.tgz
+
+# Dependency directories (if applicable)
+**/.gradle/
+**/.mvn/wrapper/
+**/.idea/workspace.xml
+
+# Temporary files
+*.tmp
+Thumbs.db
+*.DS_Store
+
+# Operating system files
+.DS_Store
+
