@@ -1,0 +1,810 @@
+{
+	"info": {
+		"_postman_id": "85fb1db3-9faf-41f4-b126-4f3e427679a7",
+		"name": "TGH_APITest_FolkaTech",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19275131"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"pm.environment.set(\"authToken\", jsonData.data.token);",
+							"",
+							"pm.test(\"Check if response is valid JSON\", function () {",
+							"       var jsonData = pm.response.json();",
+							"       pm.expect(jsonData).to.have.property('data'); // Replace 'keyName' with the expected key",
+							"   });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "reg_id",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/api/login",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "tatang@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"message\": \"User logged in\",\n    \"success\": true,\n    \"data\": {\n        \"id\": 3,\n        \"name\": \"Tatang Basher\",\n        \"email\": \"tatang@gmail.com\",\n        \"email_verified_at\": null,\n        \"role_id\": 1,\n        \"created_at\": \"2023-07-06T07:23:06.000000Z\",\n        \"updated_at\": \"2023-07-06T07:23:06.000000Z\",\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY4ODYzMjk3NSwiZXhwIjoxNjg4NjM2NTc1LCJuYmYiOjE2ODg2MzI5NzUsImp0aSI6IjlBcVJ6bkxwemJ2M1hPSmciLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.0WtCz_0JGT5pCC988EdSteTMHOJFZUZ_ZGgRB0iI5Po\"\n    }\n}"
+				},
+				{
+					"name": "Failed - Incorrect Credentials",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "tatang@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 401,\n    \"message\": \"Invalid email or password\",\n    \"success\": false,\n    \"data\": {}\n}"
+				}
+			]
+		},
+		{
+			"name": "Login Failed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check if response is valid JSON\", function () {",
+							"       var jsonData = pm.response.json();",
+							"       pm.expect(jsonData).to.not.have.property('data'); // Replace 'keyName' with the expected key",
+							"   });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password88",
+							"type": "text"
+						},
+						{
+							"key": "reg_id",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/api/login",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "tatang@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"message\": \"User logged in\",\n    \"success\": true,\n    \"data\": {\n        \"id\": 3,\n        \"name\": \"Tatang Basher\",\n        \"email\": \"tatang@gmail.com\",\n        \"email_verified_at\": null,\n        \"role_id\": 1,\n        \"created_at\": \"2023-07-06T07:23:06.000000Z\",\n        \"updated_at\": \"2023-07-06T07:23:06.000000Z\",\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY4ODYzMjk3NSwiZXhwIjoxNjg4NjM2NTc1LCJuYmYiOjE2ODg2MzI5NzUsImp0aSI6IjlBcVJ6bkxwemJ2M1hPSmciLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.0WtCz_0JGT5pCC988EdSteTMHOJFZUZ_ZGgRB0iI5Po\"\n    }\n}"
+				},
+				{
+					"name": "Failed - Incorrect Credentials",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "tatang@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 401,\n    \"message\": \"Invalid email or password\",\n    \"success\": false,\n    \"data\": {}\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Ticket Laporan",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "report_category_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Rahmat xx Saefulloh",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "l",
+							"type": "text"
+						},
+						{
+							"key": "province_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "tipe_korban",
+							"value": "php",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Tes",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "lng",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "address_location",
+							"value": "Cimahi",
+							"type": "text"
+						},
+						{
+							"key": "userfile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "urgency",
+							"value": "rendah",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/api/report",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"report"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "report_category_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Rahmat Saefulloh",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "l",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tipe_korban",
+									"value": "php",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Tes",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "lng",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "address_location",
+									"value": "Cimahi",
+									"type": "text"
+								},
+								{
+									"key": "userfile",
+									"type": "file",
+									"src": "/Users/rhmtsaepuloh/Downloads/5wPdO_1688622116.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/report",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 25 Jul 2023 16:47:42 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 25 Jul 2023 16:47:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/7.4.33"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data laporan berhasil dikirim.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Ticket Laporan Failed",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "report_category_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Rahmat xx Saefulloh",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "l",
+							"type": "text"
+						},
+						{
+							"key": "province_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "tipe_korban",
+							"value": "php",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Tes",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "lng",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "address_location",
+							"value": "Cimahi",
+							"type": "text"
+						},
+						{
+							"key": "userfile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "urgency",
+							"value": "rendah",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/api/report",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"report"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "report_category_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Rahmat Saefulloh",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "l",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tipe_korban",
+									"value": "php",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Tes",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "lng",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "address_location",
+									"value": "Cimahi",
+									"type": "text"
+								},
+								{
+									"key": "userfile",
+									"type": "file",
+									"src": "/Users/rhmtsaepuloh/Downloads/5wPdO_1688622116.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api}}/api/report",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 25 Jul 2023 16:47:42 GMT"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 25 Jul 2023 16:47:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/7.4.33"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Data laporan berhasil dikirim.\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api",
+			"value": "https://lapor.folkatech.com",
+			"type": "string"
+		}
+	]
+}
